@@ -1,0 +1,50 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TaskTastic Signup</title>
+        <script src="https://kit.fontawesome.com/ce618619cf.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <link href="./output.css" rel="stylesheet">
+    </head>
+<body class="bg-[#181a1b] text-purple-50 h-full">
+    <header class="p-3 border-b-purple-50 cursor-default">
+        <nav class="flex items-end justify-evenly">
+        <h1 class="w-9/12 text-6xl pacifico-regular">TaskTastic</h1>
+        <div>
+            <a href="https://github.com/Cadhig/Tasktastic" target="_blank" class="text-4xl cursor-pointer">GitHub</a>
+        </div>
+        </nav>
+    </header>
+    <main class="flex justify-center h-3/4">
+        <div class="flex h-full flex-col items-center justify-center w-2/4">
+            <div>
+                <h2 class="text-3xl text-center mb-9 cursor-default">Create an Account</h2>
+                <div class="flex flex-col gap-3">
+                    <input type="text" placeholder="Username" id="username" class="border-slate-950 p-3 w-80 rounded-2xl appearance-none bg-gray-800" oninput="clearError()">
+                    <div class="absolute">
+                    <i class="fa-regular fa-eye absolute top-[72px] left-[275px] text-xl" id="openEye" onclick="toggleShowPassword()"></i>
+                    </div>
+                    <input type="password" placeholder="Password" id="password" class="border-slate-950 p-3 w-80 rounded-2xl appearance-none bg-gray-800" oninput="clearError()">
+                    <div class="absolute">
+                        <i class="fa-regular fa-eye absolute top-[130px] left-[275px] text-xl" id="openEyeConfirm" onclick="toggleShowPasswordConfirm()"></i>
+                        </div>
+                    <input type="password" placeholder="Confirm password" id="confirmPassword" class="border-slate-950 p-3 w-80 rounded-2xl appearance-none bg-gray-800" oninput="clearError()">
+                </div>
+                <div id="inputBox"></div>
+                <div class="flex flex-col gap-3 mt-5">
+                    <button class="p-3 w-80 rounded-2xl bg-purple-950 text-xl hover:bg-purple-900 active:bg-purple-950" onclick="createAccount()">Sign Up</button>
+                    <div class="flex justify-center">
+                        <p class="cursor-default pr-1">Already have an account? </p>
+                        <a href="/"><button class="text-blue-900">Login</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="./script.js"></script>
+    <script src="./aesthetics.js"></script>
+</body>
+</html>
