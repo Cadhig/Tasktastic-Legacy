@@ -36,7 +36,7 @@ async function createAccount() {
         }
     })
     if (!apiCall.ok) {
-        alert('Failed to create account')
+        return showError('Username taken!', "takenUsername")
     }
     alert('Account created')
 }
@@ -45,11 +45,15 @@ async function createAccount() {
 function clearError() {
     const pass = document.getElementById(passwordMatch)
     const emptyInput = document.getElementById(emptyFieldId)
+    const takenUsername = document.getElementById("takenUsername")
     if (pass) {
         pass.remove()
     }
     if (emptyInput) {
         emptyInput.remove()
+    }
+    if (takenUsername) {
+        takenUsername.remove()
     }
 }
 

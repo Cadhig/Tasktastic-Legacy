@@ -10,27 +10,16 @@ app.use(express.urlencoded({ extended: true }))
 app.use(routes)
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './public', 'homepage.html'))
+    res.sendFile(path.join(__dirname, './public/html', 'homepage.html'))
 })
 app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, './public', 'signup.html'))
+    res.sendFile(path.join(__dirname, './public/html', 'signup.html'))
 })
+
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/html', 'notes.html'))
+})
+
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`)
 })
-
-
-
-
-// app.use(express.static('public'))
-// app.get('/', (req, res) => {
-//     res.json('Hello World')
-// });
-
-
-// app.post('/', (req, res) => {
-//     res.send(req.body)
-// });
-// app.listen(PORT, () => {
-//     console.log(`App listening on port ${PORT}`)
-// });

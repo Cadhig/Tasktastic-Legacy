@@ -51,11 +51,10 @@ router.post('/signup', (req, res) => {
         })
         .catch((err) => {
             console.error(err)
-            return res.json({
-                message: 'Could not create account.'
-            })
+            return res.status(400).json({ error: 'Account Already Exists' })
         })
 })
+
 
 //CREATE LOGIN
 
