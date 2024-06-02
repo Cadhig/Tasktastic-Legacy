@@ -1,9 +1,9 @@
 
 const router = require('express').Router()
 const userRoutes = require('./users-routes')
-const todoRoutes = require('./todo-routes')
+const notesRoutes = require('./notes-routes')
 
-router.use('/users', userRoutes);
-router.use('/todos', todoRoutes);
+router.use('/api/users', userRoutes);
+router.use('/api/notes', notesRoutes);
 
 module.exports = router

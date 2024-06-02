@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="../output.css" rel="stylesheet">
 </head>
-<body class="bg-[#181a1b] text-purple-50">
-    <header class="p-3 border-b-purple-50 cursor-default">
+<body class="bg-tastastic-background text-tasktastic-primary">
+    <header class="p-3 border-b-tasktastic-primary cursor-default">
         <nav class="flex items-end justify-evenly">
         <h1 class="w-9/12 text-6xl pacifico-regular">TaskTastic</h1>
         <div>
@@ -19,12 +19,13 @@
         </nav>
     </header>
     <main class="flex justify-around h-[90%] items-center">
-        <aside class="w-1/4 flex justify-center">
-            <p>side</p>
-        </aside>
-        <article class="w-3/4 flex justify-center">
-            <button onclick="getNotes()">test</button>
+        <article id="noteBox" class="grid grid-cols-2 w-1/4 gap-2 h-full pl-8 pt-8 overflow-auto pr-2">
         </article>
+        <aside class="w-3/4 flex justify-center">
+            <div>
+                <p>side</p>
+            </div>
+        </aside>
     </main>
     <script src="../js/notes.js"></script>
 </body>

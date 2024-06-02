@@ -1,10 +1,10 @@
 const Users = require('./users');
-const Todos = require('./todos');
+const Notes = require('./notes');
 
-Todos.belongsTo(Users)
-Users.hasMany(Todos)
+Notes.belongsTo(Users)
+Users.hasMany(Notes)
 
 module.exports = {
     Users,
-    Todos
+    Notes
 }

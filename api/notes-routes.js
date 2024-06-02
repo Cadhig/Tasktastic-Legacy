@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const { where } = require('sequelize');
-const { Todos, Users } = require('../models')
+const { Notes, Users } = require('../models')
 
 router.get('/', (req, res) => {
-    Todos.findAll({
+    Notes.findAll({
         attributes: ['id', 'title', 'description', 'user_id', 'is_completed', 'created_at', 'updated_at'],
     })
         .then((result) => {
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const id = req.params.id
-    Todos.findAll({
+    Notes.findAll({
         where: {
             id: id
         }
@@ -42,7 +42,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/:user_id', (req, res) => {
     const { title, description } = req.body
-    Todos.create({
+    Notes.create({
         title: title,
         description: description,
         user_id: req.params.user_id,
@@ -63,7 +63,7 @@ router.post('/:user_id', (req, res) => {
 
 router.put('/:id', (req, res) => {
     const { title, description, is_completed, user_id } = req.body
-    Todos.update({
+    Notes.update({
         title: title,
         description: description,
         is_completed: is_completed,
@@ -84,7 +84,7 @@ router.put('/:id', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
-    Todos.destroy({
+    Notes.destroy({
         where: {
             id: req.params.id
         }

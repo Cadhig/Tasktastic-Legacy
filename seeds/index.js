@@ -1,5 +1,5 @@
 const seedUsers = require('./users-seeds')
-const seedTodos = require('./todo-seeds')
+const seedNotes = require('./notes-seeds')
 
 const sequelize = require('../db/connection')
 
@@ -8,8 +8,8 @@ const seedAll = async () => {
     console.log('----------------Database Synced!-----------------------')
     await seedUsers()
     console.log('-----------------Users Seeded!-------------------------')
-    await seedTodos()
-    console.log('-----------------Todos Seeded!-------------------------')
+    await seedNotes()
+    console.log('-----------------Notes Seeded!-------------------------')
     process.exit(0)
 }
 

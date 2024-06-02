@@ -1,6 +1,6 @@
-const { Todos } = require('../models')
+const { Notes } = require('../models')
 
-const todoData = [
+const notesData = [
     {
         title: "Clean room",
         description: "Tomorrow @4pm"
@@ -15,6 +15,6 @@ const todoData = [
     },
 ]
 
-const seedTodoData = () => Todos.bulkCreate(todoData)
+const seedNotesData = () => Notes.bulkCreate(notesData)
 
-module.exports = seedTodoData
+module.exports = seedNotesData

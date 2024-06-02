@@ -7,3 +7,19 @@
     font-weight: 400;
     font-style: normal;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: theme(colors.tasktastic-primary);
+    border-radius: 10px;
+}
