@@ -28,6 +28,7 @@ async function createAccount() {
         username: username.value,
         password: password.value
     }
+    console.log(data)
     const apiCall = await fetch('http://127.0.0.1:6002/users/signup', {
         method: "POST",
         body: JSON.stringify(data),
