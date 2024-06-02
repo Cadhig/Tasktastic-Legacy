@@ -12,14 +12,14 @@
 [ ] create a PUT /account endpoint to update user account
 
 ### FRONTEND
-[ ] create homepage HTML file that contains a login screen and info about the app
-[ ] create a signup HTML file
+[x] create homepage HTML file that contains a login screen and info about the app
+[x] create a signup HTML file
 [ ] create notes HTML file that will display users notes, and give them the ability to add notes
 [ ] create account HTML file that will display users account and give them the ability to update their username (MAYBE profile picture?)
 
-[ ] create JS file to receive users signup info and send it to backend
+[x] create JS file to receive users signup info and send it to backend
 [ ] create JS file to receive users login info and send to backend
-[ ] create JS file to display notes on the notes.html page, as well as post notes.
+[x] create JS file to display notes on the notes.html page, as well as post notes.
 [ ] create a JS file to display account info, and send updated information to backend
 
 [ ] implement a MD library (https://www.npmjs.com/package/markdown-it OR https://www.npmjs.com/package/marked)
