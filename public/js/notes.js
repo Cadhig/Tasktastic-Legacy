@@ -46,7 +46,7 @@ async function showSelectedNote(noteId) {
     console.log(returnedCall)
     const noteDiv = document.createElement('div')
     const createNew = document.createElement('p')
-    createNew.setAttribute('class', 'absolute mt-[30px] ml-[1200px] hover:cursor-pointer')
+    createNew.setAttribute('class', 'absolute mt-[30px] ml-[60%] hover:cursor-pointer')
     createNew.setAttribute('onclick', `createNewNote()`)
     createNew.innerHTML = '+ New Note'
     noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full')

@@ -606,6 +606,14 @@ video {
   margin-left: 500px;
 }
 
+.ml-\[75\%\] {
+  margin-left: 75%;
+}
+
+.ml-\[60\%\] {
+  margin-left: 60%;
+}
+
 .flex {
   display: flex;
 }
