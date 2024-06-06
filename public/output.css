@@ -570,6 +570,14 @@ video {
   top: 72px;
 }
 
+.left-\[1200px\] {
+  left: 1200px;
+}
+
+.top-\[30px\] {
+  top: 30px;
+}
+
 .m-2 {
   margin: 0.5rem;
 }
@@ -584,6 +592,18 @@ video {
 
 .mt-5 {
   margin-top: 1.25rem;
+}
+
+.ml-\[1200px\] {
+  margin-left: 1200px;
+}
+
+.mt-\[30px\] {
+  margin-top: 30px;
+}
+
+.ml-\[500px\] {
+  margin-left: 500px;
 }
 
 .flex {
@@ -860,6 +880,10 @@ video {
 ::-webkit-scrollbar-thumb {
   background: #dabfff;
   border-radius: 10px;
+}
+
+.hover\:cursor-pointer:hover {
+  cursor: pointer;
 }
 
 .hover\:bg-purple-900:hover {
