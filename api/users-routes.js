@@ -51,8 +51,38 @@ router.post('/signup', (req, res) => {
         })
         .catch((err) => {
             console.error(err)
-            return res.status(400).json({ error: 'Account Already Exists' })
+            res.status(400).json({ error: 'Account Already Exists' })
+            return
         })
+})
+
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body
+    console.log(username, password)
+    try {
+        const foundUser = await Users.findOne({
+            attributes: ['id', 'username', 'password'],
+            where: {
+                username: username,
+            }
+        })
+        console.log(foundUser.password)
+        if (foundUser === null) {
+            res.status(401).json({ error: 'Incorrect username/password' })
+            return
+        }
+        if (password !== foundUser.password) {
+            res.status(401).json({ error: "Incorrect username/password" })
+            return
+        }
+        req.session.user_id = foundUser.id
+        req.session.authorized = true
+        res.status(200).json({ success: 'Logged in' })
+    }
+    catch (error) {
+        console.error(error)
+        res.status(500).json({ error: "Internal server error" })
+    }
 })
 
 

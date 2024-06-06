@@ -2,19 +2,19 @@ const router = require('express').Router();
 const { where } = require('sequelize');
 const { Notes, Users } = require('../models')
 
-router.get('/', (req, res) => {
-    Notes.findAll({
+router.get('/', async (req, res) => {
+    console.log(req.session.user_id)
+    if (!req.session.user_id) {
+        return res.status(401).json({ error: 'Unauthorized' })
+    }
+    const allNotes = await Notes.findAll({
         attributes: ['id', 'title', 'description', 'user_id', 'is_completed', 'created_at', 'updated_at'],
+        where: {
+            user_id: req.session.user_id
+        }
     })
-        .then((result) => {
-            return res.json(result)
-        })
-        .catch((err) => {
-            console.error(err)
-            return res.json({
-                message: 'Could not fetch notes!'
-            })
-        })
+
+    return res.json(allNotes)
 })
 
 router.get('/:id', (req, res) => {

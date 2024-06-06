@@ -29,7 +29,7 @@ async function createAccount() {
         password: password.value
     }
     console.log(data)
-    const apiCall = await fetch('http://127.0.0.1:6002/api/users/signup', {
+    const apiCall = await fetch('/api/users/signup', {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -70,4 +70,24 @@ function showError(error, id) {
 
 function check() {
     console.log('i work')
+}
+
+async function userLogin() {
+    const username = document.getElementById('username')
+    const password = document.getElementById('password')
+    const data = {
+        username: username.value,
+        password: password.value
+    }
+    const apiCall = await fetch('/api/users/login', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    if (!apiCall.ok) {
+        return showError('Invalid login!')
+    }
+    window.location.assign('/notes')
 }
