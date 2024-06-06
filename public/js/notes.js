@@ -17,7 +17,7 @@ async function notesSidebar() {
         const noteBox = document.getElementById('noteBox')
         const individualNote = document.createElement('div')
         const randomColor = Math.floor(Math.random() * colorArray.length)
-        individualNote.setAttribute('class', `flex flex-col items-center p-9 w-full border border-solid shadow-2xl h-[20%] ${colorArray[randomColor]}`)
+        individualNote.setAttribute('class', `flex flex-col items-center p-9 w-full border border-solid shadow-2xl h-[20%] ${colorArray[randomColor]} justify-center text-2xl font-bold text-center`)
         individualNote.setAttribute('onclick', `showSelectedNote(${noteId})`)
         const title = document.createElement('h2')
         const createdAt = document.createElement('p')
@@ -70,7 +70,11 @@ function clearNote() {
     document.getElementById('showSelectedNote').innerHTML = " "
 }
 
-function createNewNote() {
+function createNewNote(showNote) {
+    const showCurrentNote = document.getElementById('showSelectedNote')
     console.log('I WORK')
+    if (showCurrentNote.innerHTML !== "") {
+        clearNote()
+    }
 }
 notesSidebar()
