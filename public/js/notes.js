@@ -1,5 +1,5 @@
 
-const colorArray = ['bg-[#907ad6] text-black', 'bg-[#a0d2db] text-black', 'bg-[#d8a48f] text-black']
+const colorArray = ['bg-[#907ad6] text-black', 'bg-[#a0d2db] text-black', 'bg-[#d8a48f] text-black'];
 
 async function notesSidebar() {
     const response = await fetch(`/api/notes`, {
@@ -7,26 +7,26 @@ async function notesSidebar() {
         headers: {
             "Content-type": "application/json"
         }
-    })
+    });
 
-    const returnedCall = await response.json()
-    console.log(returnedCall)
+    const returnedCall = await response.json();
+    console.log(returnedCall);
     for (let i = 0; i < returnedCall.length; i++) {
-        const singleNote = returnedCall[i]
-        const noteId = returnedCall[i].id
-        const noteBox = document.getElementById('noteBox')
-        const individualNote = document.createElement('div')
-        const randomColor = Math.floor(Math.random() * colorArray.length)
-        individualNote.setAttribute('class', `flex flex-col items-center p-9 w-full border border-solid shadow-2xl h-[20%] ${colorArray[randomColor]} justify-center text-2xl font-bold text-center`)
-        individualNote.setAttribute('onclick', `showSelectedNote(${noteId})`)
-        const title = document.createElement('h2')
-        const createdAt = document.createElement('p')
-        title.textContent = singleNote.title
-        createdAt.textContent = singleNote.createdAt
+        const singleNote = returnedCall[i];
+        const noteId = returnedCall[i].id;
+        const noteBox = document.getElementById('noteBox');
+        const individualNote = document.createElement('div');
+        const randomColor = Math.floor(Math.random() * colorArray.length);
+        individualNote.setAttribute('class', `flex flex-col items-center p-9 w-full border border-solid shadow-2xl h-[20%] ${colorArray[randomColor]} justify-center text-2xl font-bold text-center`);
+        individualNote.setAttribute('onclick', `showSelectedNote(${noteId})`);
+        const title = document.createElement('h2');
+        const createdAt = document.createElement('p');
+        title.textContent = singleNote.title;
+        createdAt.textContent = singleNote.createdAt;
 
-        individualNote.appendChild(title)
-        individualNote.appendChild(createdAt)
-        noteBox.appendChild(individualNote)
+        individualNote.appendChild(title);
+        individualNote.appendChild(createdAt);
+        noteBox.appendChild(individualNote);
     }
 }
 
@@ -36,45 +36,86 @@ async function showSelectedNote(noteId) {
         headers: {
             "Content-type": "application/json"
         }
-    })
-    const showNote = document.getElementById('showSelectedNote')
-    showNote.setAttribute('class', 'h-full w-full border-2 border-solid')
-    if (showNote.innerHTML !== "") {
-        clearNote()
-    }
-    const returnedCall = await response.json()
-    console.log(returnedCall)
-    const noteDiv = document.createElement('div')
-    const createNew = document.createElement('p')
-    createNew.setAttribute('class', 'absolute mt-[30px] ml-[60%] hover:cursor-pointer')
-    createNew.setAttribute('onclick', `createNewNote()`)
-    createNew.innerHTML = '+ New Note'
-    noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full')
-    const noteTitle = document.createElement('h2')
-    noteTitle.setAttribute('class', 'p-2.5 border-2 border-solid w-1/2 m-2.5 flex justify-center text-3xl font-bold')
-    noteTitle.innerHTML = returnedCall[0].title
-    const noteDescription = document.createElement('p')
-    noteDescription.setAttribute('class', 'p-2.5 border-2 border-solid w-[98%] m-2.5 h-3/4')
-    noteDescription.innerHTML = returnedCall[0].description
-    const noteCreatedAt = document.createElement('p')
-    noteCreatedAt.innerHTML = returnedCall[0].created_at
-    noteDiv.appendChild(noteTitle)
-    noteDiv.appendChild(noteDescription)
-    noteDiv.appendChild(noteCreatedAt)
-    noteDiv.appendChild(createNew)
-    showNote.appendChild(noteDiv)
-
+    });
+    const returnedCall = await response.json();
+    showSelectedNoteUi(returnedCall);
 }
 
 function clearNote() {
-    document.getElementById('showSelectedNote').innerHTML = " "
+    document.getElementById('showSelectedNote').innerHTML = " ";
 }
 
 function createNewNote(showNote) {
-    const showCurrentNote = document.getElementById('showSelectedNote')
-    console.log('I WORK')
+    const showCurrentNote = document.getElementById('showSelectedNote');
+    console.log('I WORK');
     if (showCurrentNote.innerHTML !== "") {
-        clearNote()
+        clearNote();
     }
 }
-notesSidebar()
+notesSidebar();
+
+async function updateNote(noteId) {
+    const response = await fetch(`/api/notes/${noteId}`, {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        }
+    });
+}
+
+
+function showSelectedNoteUi(returnedCall) {
+    const showNote = document.getElementById('showSelectedNote');
+    showNote.setAttribute('class', 'h-full w-full border-2 border-solid');
+    if (showNote.innerHTML !== "") {
+        clearNote();
+    }
+    console.log(returnedCall);
+
+    const noteDiv = document.createElement('div');
+    noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full');
+    const saveButton = saveButtonUi();
+    const createNewButton = createNewButtonUi();
+    const noteTitle = noteTitleUi(returnedCall[0].title);
+    const noteDescription = noteDescriptionUi(returnedCall[0].description);
+    const noteCreatedAt = noteCreatedAtUi(returnedCall[0].created_at);
+
+    noteDiv.append(noteTitle, noteDescription, noteCreatedAt, createNewButton, saveButton);
+    showNote.appendChild(noteDiv);
+}
+
+function saveButtonUi(noteId) {
+    const saveButton = document.createElement('p');
+    saveButton.setAttribute('class', 'absolute mt-[38%] ml-[60%] hover:cursor-pointer');
+    saveButton.setAttribute('onclick', `updateNote(${noteId})`);
+    saveButton.innerHTML = 'Save'
+    return saveButton;
+}
+
+function createNewButtonUi() {
+    const createNewButton = document.createElement('p');
+    createNewButton.setAttribute('class', 'absolute mt-[30px] ml-[60%] hover:cursor-pointer');
+    createNewButton.setAttribute('onclick', `createNewNote()`);
+    createNewButton.innerHTML = '+ New Note';
+    return createNewButton;
+}
+
+function noteTitleUi(title) {
+    const noteTitle = document.createElement('input');
+    noteTitle.setAttribute('class', 'p-2.5 border-2 border-solid w-1/2 m-2.5 flex justify-center text-3xl font-bold');
+    noteTitle.value = title;
+    return noteTitle
+}
+
+function noteDescriptionUi(description) {
+    const noteDescription = document.createElement('textarea');
+    noteDescription.setAttribute('class', 'p-2.5 border-2 border-solid w-[98%] m-2.5 h-3/4');
+    noteDescription.value = description;
+    return noteDescription
+}
+
+function noteCreatedAtUi(createdAt) {
+    const noteCreatedAt = document.createElement('p');
+    noteCreatedAt.innerHTML = createdAt;
+    return noteCreatedAt
+}
