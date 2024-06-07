@@ -18,7 +18,7 @@ async function notesSidebar() {
         const noteId = returnedCall[i].id;
         const individualNote = document.createElement('div');
         const randomColor = Math.floor(Math.random() * colorArray.length);
-        individualNote.setAttribute('class', `flex flex-col items-center p-9 w-full border border-solid shadow-2xl h-[20%] ${colorArray[randomColor]} justify-center text-2xl text-tasktastic-secondary font-bold text-center`);
+        individualNote.setAttribute('class', `flex flex-col items-center p-9 w-full border border-solid shadow-2xl h-40 ${colorArray[randomColor]} justify-center text-2xl text-tasktastic-secondary font-bold text-center`);
         individualNote.setAttribute('onclick', `showSelectedNote(${noteId})`);
         const title = document.createElement('h2');
         const createdAt = document.createElement('p');
@@ -30,6 +30,7 @@ async function notesSidebar() {
         noteBox.appendChild(individualNote);
     }
 }
+notesSidebar();
 
 async function showSelectedNote(noteId) {
     const response = await fetch(`/api/notes/${noteId}`, {
@@ -46,14 +47,21 @@ function clearNote() {
     document.getElementById('showSelectedNote').innerHTML = " ";
 }
 
-function createNewNote(showNote) {
-    const showCurrentNote = document.getElementById('showSelectedNote');
-    console.log('I WORK');
-    if (showCurrentNote.innerHTML !== "") {
-        clearNote();
-    }
+async function createNewNote() {
+    const noteDescription = document.getElementById('noteDescription');
+    const noteTitle = document.getElementById('noteTitle');
+    const data = {
+        title: noteTitle.value,
+        description: noteDescription.value
+    };
+    const response = await fetch(`/api/notes`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-type": "application/json"
+        }
+    });
 }
-notesSidebar();
 
 async function updateNote(noteId) {
     console.log(noteId)
@@ -108,7 +116,7 @@ function saveButtonUi(noteId) {
 function createNewButtonUi() {
     const createNewButton = document.createElement('p');
     createNewButton.setAttribute('class', 'absolute mt-[30px] ml-[60%] hover:cursor-pointer');
-    createNewButton.setAttribute('onclick', `createNewNote()`);
+    createNewButton.setAttribute('onclick', `createNewNoteUi()`);
     createNewButton.innerHTML = '+ New Note';
     return createNewButton;
 }
@@ -117,7 +125,12 @@ function noteTitleUi(title) {
     const noteTitle = document.createElement('input');
     noteTitle.setAttribute('class', 'p-2.5 border-2 border-solid w-1/2 m-2.5 flex justify-center text-3xl font-bold bg-tasktastic-input-background');
     noteTitle.setAttribute('id', 'noteTitle')
-    noteTitle.value = title;
+    noteTitle.placeholder = "Title"
+    if (title === undefined) {
+        noteTitle.value = ""
+    } else {
+        noteTitle.value = title;
+    }
     return noteTitle
 }
 
@@ -125,7 +138,12 @@ function noteDescriptionUi(description) {
     const noteDescription = document.createElement('textarea');
     noteDescription.setAttribute('class', 'p-2.5 border-2 border-tasktastic-gray border-solid w-[98%] m-2.5 h-3/4 bg-tasktastic-input-background');
     noteDescription.setAttribute('id', 'noteDescription')
-    noteDescription.value = description;
+    noteDescription.placeholder = "Type note here"
+    if (description === undefined) {
+        noteDescription.value = ""
+    } else {
+        noteDescription.value = description;
+    }
     return noteDescription
 }
 
@@ -133,4 +151,24 @@ function noteCreatedAtUi(createdAt) {
     const noteCreatedAt = document.createElement('p');
     noteCreatedAt.innerHTML = createdAt;
     return noteCreatedAt
+}
+
+function createNewNoteUi(showNote) {
+    const noteDiv = document.createElement('div');
+    noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full');
+    const showCurrentNote = document.getElementById('showSelectedNote');
+    const saveButton = saveButtonUi();
+    const createNewButton = createNewButtonUi();
+    const noteTitle = noteTitleUi();
+    const noteDescription = noteDescriptionUi(); //add input value
+    const saveNewNoteButton = document.createElement('p');
+    saveNewNoteButton.setAttribute('class', 'absolute mt-[30px] ml-[45%] hover:cursor-pointer');
+    saveNewNoteButton.setAttribute('onclick', `createNewNote()`)
+    saveNewNoteButton.innerHTML = "Create Note"
+    console.log('I WORK');
+    if (showCurrentNote.innerHTML !== "") {
+        clearNote();
+    }
+    noteDiv.append(noteTitle, noteDescription, createNewButton, saveButton, saveNewNoteButton);
+    showCurrentNote.appendChild(noteDiv);
 }

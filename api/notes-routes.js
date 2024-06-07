@@ -40,14 +40,14 @@ router.get('/:id', (req, res) => {
         })
 })
 
-router.post('/:user_id', (req, res) => {
+router.post('/', (req, res) => {
     const { title, description } = req.body
     Notes.create({
         title: title,
         description: description,
-        user_id: req.params.user_id,
+        user_id: req.session.user_id,
         where: {
-            user_id: req.params.user_id
+            user_id: req.session.user_id
         }
     })
         .then((result) => {
