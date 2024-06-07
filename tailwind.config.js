@@ -7,7 +7,9 @@ module.exports = {
         "tasktastic-primary": "#dabfff",
         "tasktastic-secondary": "#3b0764",
         "tasktastic-accent": "#005f80",
-        "tastastic-background": "#181a1b"
+        "tasktastic-background": "#181a1b",
+        "tasktastic-input-background": "#121212",
+        "tasktastic-border": "#e5e7eb"
       }
     },
   },

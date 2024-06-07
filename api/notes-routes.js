@@ -67,7 +67,7 @@ router.put('/:id', (req, res) => {
         title: title,
         description: description,
         is_completed: is_completed,
-        user_id: user_id,
+        user_id: req.session.user_id,
 
     }, {
         where: {

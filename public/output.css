@@ -594,26 +594,6 @@ video {
   margin-top: 30px;
 }
 
-.mt-\[75\%\] {
-  margin-top: 75%;
-}
-
-.mt-\[50\%\] {
-  margin-top: 50%;
-}
-
-.mt-\[30\%\] {
-  margin-top: 30%;
-}
-
-.mt-\[35\%\] {
-  margin-top: 35%;
-}
-
-.mt-\[40\%\] {
-  margin-top: 40%;
-}
-
 .mt-\[38\%\] {
   margin-top: 38%;
 }
@@ -774,14 +754,19 @@ video {
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
 
+.bg-tasktastic-background {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 26 27 / var(--tw-bg-opacity));
+}
+
+.bg-tasktastic-input-background {
+  --tw-bg-opacity: 1;
+  background-color: rgb(18 18 18 / var(--tw-bg-opacity));
+}
+
 .bg-tasktastic-secondary {
   --tw-bg-opacity: 1;
   background-color: rgb(59 7 100 / var(--tw-bg-opacity));
-}
-
-.bg-tastastic-background {
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 26 27 / var(--tw-bg-opacity));
 }
 
 .p-2 {
@@ -867,6 +852,11 @@ video {
 .text-tasktastic-primary {
   --tw-text-opacity: 1;
   color: rgb(218 191 255 / var(--tw-text-opacity));
+}
+
+.text-tasktastic-secondary {
+  --tw-text-opacity: 1;
+  color: rgb(59 7 100 / var(--tw-text-opacity));
 }
 
 .shadow-2xl {

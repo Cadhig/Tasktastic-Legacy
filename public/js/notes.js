@@ -11,13 +11,14 @@ async function notesSidebar() {
 
     const returnedCall = await response.json();
     console.log(returnedCall);
+    const noteBox = document.getElementById('noteBox');
+    noteBox.innerHTML = null
     for (let i = 0; i < returnedCall.length; i++) {
         const singleNote = returnedCall[i];
         const noteId = returnedCall[i].id;
-        const noteBox = document.getElementById('noteBox');
         const individualNote = document.createElement('div');
         const randomColor = Math.floor(Math.random() * colorArray.length);
-        individualNote.setAttribute('class', `flex flex-col items-center p-9 w-full border border-solid shadow-2xl h-[20%] ${colorArray[randomColor]} justify-center text-2xl font-bold text-center`);
+        individualNote.setAttribute('class', `flex flex-col items-center p-9 w-full border border-solid shadow-2xl h-[20%] ${colorArray[randomColor]} justify-center text-2xl text-tasktastic-secondary font-bold text-center`);
         individualNote.setAttribute('onclick', `showSelectedNote(${noteId})`);
         const title = document.createElement('h2');
         const createdAt = document.createElement('p');
@@ -55,12 +56,24 @@ function createNewNote(showNote) {
 notesSidebar();
 
 async function updateNote(noteId) {
+    console.log(noteId)
+    const noteTitle = document.getElementById('noteTitle');
+    const noteDescription = document.getElementById('noteDescription');
+    const data = {
+        title: noteTitle.value,
+        description: noteDescription.value,
+    };
+    console.log(data)
     const response = await fetch(`/api/notes/${noteId}`, {
         method: "PUT",
+        body: JSON.stringify(data),
         headers: {
             "Content-type": "application/json"
         }
     });
+    const parsedResponse = await response.json();
+    console.log(parsedResponse);
+    notesSidebar()
 }
 
 
@@ -74,7 +87,7 @@ function showSelectedNoteUi(returnedCall) {
 
     const noteDiv = document.createElement('div');
     noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full');
-    const saveButton = saveButtonUi();
+    const saveButton = saveButtonUi(returnedCall[0].id);
     const createNewButton = createNewButtonUi();
     const noteTitle = noteTitleUi(returnedCall[0].title);
     const noteDescription = noteDescriptionUi(returnedCall[0].description);
@@ -102,14 +115,16 @@ function createNewButtonUi() {
 
 function noteTitleUi(title) {
     const noteTitle = document.createElement('input');
-    noteTitle.setAttribute('class', 'p-2.5 border-2 border-solid w-1/2 m-2.5 flex justify-center text-3xl font-bold');
+    noteTitle.setAttribute('class', 'p-2.5 border-2 border-solid w-1/2 m-2.5 flex justify-center text-3xl font-bold bg-tasktastic-input-background');
+    noteTitle.setAttribute('id', 'noteTitle')
     noteTitle.value = title;
     return noteTitle
 }
 
 function noteDescriptionUi(description) {
     const noteDescription = document.createElement('textarea');
-    noteDescription.setAttribute('class', 'p-2.5 border-2 border-solid w-[98%] m-2.5 h-3/4');
+    noteDescription.setAttribute('class', 'p-2.5 border-2 border-tasktastic-gray border-solid w-[98%] m-2.5 h-3/4 bg-tasktastic-input-background');
+    noteDescription.setAttribute('id', 'noteDescription')
     noteDescription.value = description;
     return noteDescription
 }
