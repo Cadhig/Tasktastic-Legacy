@@ -61,6 +61,7 @@ async function createNewNote() {
             "Content-type": "application/json"
         }
     });
+    notesSidebar()
 }
 
 async function updateNote(noteId) {
@@ -157,6 +158,7 @@ function createNewNoteUi(showNote) {
     const noteDiv = document.createElement('div');
     noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full');
     const showCurrentNote = document.getElementById('showSelectedNote');
+    showCurrentNote.setAttribute('class', 'h-full w-full border-2 border-solid');
     const saveButton = saveButtonUi();
     const createNewButton = createNewButtonUi();
     const noteTitle = noteTitleUi();
