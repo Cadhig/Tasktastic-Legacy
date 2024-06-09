@@ -18,7 +18,7 @@ async function notesSidebar() {
         const noteId = returnedCall[i].id;
         const individualNote = document.createElement('div');
         const randomColor = Math.floor(Math.random() * colorArray.length);
-        individualNote.setAttribute('class', `flex flex-col items-center p-9 w-full border border-solid shadow-2xl h-40 ${colorArray[randomColor]} justify-center text-2xl text-tasktastic-secondary font-bold text-center`);
+        individualNote.setAttribute('class', `min-h-8 flex grow items-center p-9 w-full border border-solid shadow-2xl h-40 ${colorArray[randomColor]} justify-center text-2xl text-tasktastic-secondary font-bold text-center`);
         individualNote.setAttribute('onclick', `showSelectedNote(${noteId})`);
         const title = document.createElement('h2');
         const createdAt = document.createElement('p');
@@ -43,9 +43,6 @@ async function showSelectedNote(noteId) {
     showSelectedNoteUi(returnedCall);
 }
 
-function clearNote() {
-    document.getElementById('showSelectedNote').innerHTML = " ";
-}
 
 async function createNewNote() {
     const noteDescription = document.getElementById('noteDescription');
@@ -85,6 +82,21 @@ async function updateNote(noteId) {
     notesSidebar()
 }
 
+async function deleteNote(noteId) {
+    const response = await fetch(`/api/notes/${noteId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json"
+        }
+    });
+    notesSidebar()
+
+}
+
+
+function clearNote() {
+    document.getElementById('showSelectedNote').innerHTML = " ";
+}
 
 function showSelectedNoteUi(returnedCall) {
     const showNote = document.getElementById('showSelectedNote');
@@ -101,13 +113,14 @@ function showSelectedNoteUi(returnedCall) {
     const noteTitle = noteTitleUi(returnedCall[0].title);
     const noteDescription = noteDescriptionUi(returnedCall[0].description);
     const noteCreatedAt = noteCreatedAtUi(returnedCall[0].created_at);
+    const deleteButton = deleteButtonUi(returnedCall[0].id)
 
-    noteDiv.append(noteTitle, noteDescription, noteCreatedAt, createNewButton, saveButton);
+    noteDiv.append(noteTitle, noteDescription, noteCreatedAt, createNewButton, saveButton, deleteButton);
     showNote.appendChild(noteDiv);
 }
 
 function saveButtonUi(noteId) {
-    const saveButton = document.createElement('p');
+    const saveButton = document.createElement('button');
     saveButton.setAttribute('class', 'absolute mt-[38%] ml-[60%] hover:cursor-pointer');
     saveButton.setAttribute('onclick', `updateNote(${noteId})`);
     saveButton.innerHTML = 'Save'
@@ -115,11 +128,19 @@ function saveButtonUi(noteId) {
 }
 
 function createNewButtonUi() {
-    const createNewButton = document.createElement('p');
+    const createNewButton = document.createElement('button');
     createNewButton.setAttribute('class', 'absolute mt-[30px] ml-[60%] hover:cursor-pointer');
     createNewButton.setAttribute('onclick', `createNewNoteUi()`);
     createNewButton.innerHTML = '+ New Note';
     return createNewButton;
+}
+
+function deleteButtonUi(noteId) {
+    const deleteButton = document.createElement('button');
+    deleteButton.setAttribute('class', 'absolute mt-[38%] ml-[50%] hover:cursor-pointer');
+    deleteButton.setAttribute('onclick', `deleteNote(${noteId})`);
+    deleteButton.innerHTML = 'Delete';
+    return deleteButton;
 }
 
 function noteTitleUi(title) {
@@ -163,7 +184,7 @@ function createNewNoteUi(showNote) {
     const createNewButton = createNewButtonUi();
     const noteTitle = noteTitleUi();
     const noteDescription = noteDescriptionUi(); //add input value
-    const saveNewNoteButton = document.createElement('p');
+    const saveNewNoteButton = document.createElement('button');
     saveNewNoteButton.setAttribute('class', 'absolute mt-[30px] ml-[45%] hover:cursor-pointer');
     saveNewNoteButton.setAttribute('onclick', `createNewNote()`)
     saveNewNoteButton.innerHTML = "Create Note"

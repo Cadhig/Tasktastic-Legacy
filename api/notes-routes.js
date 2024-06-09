@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { where } = require('sequelize');
-const { Notes, Users } = require('../models')
+const { Notes, Users } = require('../models');
+const sequelize = require('sequelize');
 
 router.get('/', async (req, res) => {
     console.log(req.session.user_id)
@@ -9,20 +10,21 @@ router.get('/', async (req, res) => {
     }
     const allNotes = await Notes.findAll({
         attributes: ['id', 'title', 'description', 'user_id', 'is_completed', 'created_at', 'updated_at'],
+        order: [['created_at', 'DESC']],
         where: {
-            user_id: req.session.user_id
-        }
-    })
+            user_id: req.session.user_id,
+        },
+    });
 
-    return res.json(allNotes)
-})
+    return res.json(allNotes);
+});
 
 router.get('/:id', (req, res) => {
     const id = req.params.id
     Notes.findAll({
         where: {
             id: id
-        }
+        },
     })
         .then((result) => {
             if (id === null) {
@@ -38,7 +40,7 @@ router.get('/:id', (req, res) => {
                 message: 'Could not fetch by ID'
             })
         })
-})
+});
 
 router.post('/', (req, res) => {
     const { title, description } = req.body
@@ -99,7 +101,7 @@ router.delete('/:id', (req, res) => {
             return res.json({
                 message: 'Could not delete note!'
             })
-        })
-})
+        });
+});
 
 module.exports = router
