@@ -18,10 +18,10 @@ async function notesSidebar(viewMode = 'grid') {
     sidebar.innerHTML = null
     sidebar.append(listButton, noteBox)
     let classes = ' h-40'
-    let noteBoxClasses = 'grid grid-cols-2 w-[500px] gap-3 ml-7 px-7 pt-7 rounded-lg overflow-auto flex-wrap content-baseline bg-tasktastic-box overflow-auto h-[600px]'
+    let noteBoxClasses = 'grid grid-cols-2 w-[500px] gap-3 ml-7 px-7 pt-7 rounded-lg overflow-auto flex-wrap content-baseline bg-tasktastic-box overflow-auto h-[90%]'
     if (viewMode === 'list') {
         classes = 'w-full h-10 flex flex-col items-center justify-center'
-        noteBoxClasses = 'flex flex-col w-[500px] gap-3 ml-7 px-7 pt-7 rounded-lg overflow-auto flex-wrap content-baseline bg-tasktastic-box overflow-auto h-[600px]'
+        noteBoxClasses = 'flex flex-col w-[500px] gap-3 ml-7 px-7 pt-7 rounded-lg overflow-auto flex-wrap content-baseline bg-tasktastic-box overflow-auto h-[90%]'
 
     }
     noteBox.setAttribute('class', noteBoxClasses)
@@ -112,7 +112,7 @@ function clearNote() {
 
 function showSelectedNoteUi(returnedCall) {
     const showNote = document.getElementById('showSelectedNote');
-    showNote.setAttribute('class', 'h-[90%] w-[90%] bg-tasktastic-box rounded-lg');
+    showNote.setAttribute('class', 'h-[90%] w-[95%] bg-tasktastic-box rounded-lg shadow-2xl');
     if (showNote.innerHTML !== "") {
         clearNote();
     }
@@ -214,7 +214,7 @@ function createNewNoteUi(showNote) {
     buttonDiv.setAttribute('class', 'flex w-full justify-end gap-1.5 pr-8')
     noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full');
     const showCurrentNote = document.getElementById('showSelectedNote');
-    showCurrentNote.setAttribute('class', 'h-[90%] w-[90%] bg-tasktastic-box rounded-lg');
+    showCurrentNote.setAttribute('class', 'h-[90%] w-[95%] bg-tasktastic-box rounded-lg shadow-2xl');
     const saveButton = saveButtonUi();
     const createNewButton = createNewButtonUi();
     const noteTitle = noteTitleUi();
