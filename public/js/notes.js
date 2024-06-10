@@ -13,12 +13,13 @@ async function notesSidebar() {
     console.log(returnedCall);
     const noteBox = document.getElementById('noteBox');
     noteBox.innerHTML = null
+    const listButton = listViewButtonUi()
     for (let i = 0; i < returnedCall.length; i++) {
         const singleNote = returnedCall[i];
         const noteId = returnedCall[i].id;
         const individualNote = document.createElement('div');
         const randomColor = Math.floor(Math.random() * colorArray.length);
-        individualNote.setAttribute('class', `min-h-8 flex grow items-center p-9 w-full border border-solid shadow-2xl h-40 ${colorArray[randomColor]} justify-center text-2xl text-tasktastic-secondary font-bold text-center`);
+        individualNote.setAttribute('class', `min-h-8 rounded-lg flex items-center p-9 w-52 shadow-2xl h-40 ${colorArray[randomColor]} justify-center text-2xl text-tasktastic-secondary font-bold text-center`);
         individualNote.setAttribute('onclick', `showSelectedNote(${noteId})`);
         const title = document.createElement('h2');
         const createdAt = document.createElement('p');
@@ -100,13 +101,17 @@ function clearNote() {
 
 function showSelectedNoteUi(returnedCall) {
     const showNote = document.getElementById('showSelectedNote');
-    showNote.setAttribute('class', 'h-full w-full border-2 border-solid');
+    showNote.setAttribute('class', 'h-[90%] w-[90%] bg-tasktastic-box rounded-lg');
     if (showNote.innerHTML !== "") {
         clearNote();
     }
     console.log(returnedCall);
 
     const noteDiv = document.createElement('div');
+    const buttonDiv = document.createElement('div')
+    const containerBottom = document.createElement('div')
+    containerBottom.setAttribute('class', 'w-full flex items-center justify-evenly')
+    buttonDiv.setAttribute('class', 'flex w-3/4 justify-end gap-1.5')
     noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full');
     const saveButton = saveButtonUi(returnedCall[0].id);
     const createNewButton = createNewButtonUi();
@@ -115,13 +120,26 @@ function showSelectedNoteUi(returnedCall) {
     const noteCreatedAt = noteCreatedAtUi(returnedCall[0].created_at);
     const deleteButton = deleteButtonUi(returnedCall[0].id)
 
-    noteDiv.append(noteTitle, noteDescription, noteCreatedAt, createNewButton, saveButton, deleteButton);
+    buttonDiv.append(createNewButton, saveButton, deleteButton)
+    noteDiv.append(noteTitle, noteDescription, noteCreatedAt);
+    containerBottom.append(noteCreatedAt, buttonDiv)
+    noteDiv.append(containerBottom)
     showNote.appendChild(noteDiv);
+}
+
+function listViewUi() {
+
+}
+
+function listViewButtonUi() {
+    const listButton = document.createElement('button')
+    listButton.innerHTML = "List View"
+    return listButton
 }
 
 function saveButtonUi(noteId) {
     const saveButton = document.createElement('button');
-    saveButton.setAttribute('class', 'absolute mt-[38%] ml-[60%] hover:cursor-pointer');
+    saveButton.setAttribute('class', ' px-5 py-2 bg-[#8b5cf6] text-white hover:cursor-pointer rounded-lg font-bold');
     saveButton.setAttribute('onclick', `updateNote(${noteId})`);
     saveButton.innerHTML = 'Save'
     return saveButton;
@@ -129,7 +147,7 @@ function saveButtonUi(noteId) {
 
 function createNewButtonUi() {
     const createNewButton = document.createElement('button');
-    createNewButton.setAttribute('class', 'absolute mt-[30px] ml-[60%] hover:cursor-pointer');
+    createNewButton.setAttribute('class', ' px-5 py-2 bg-[#22c55e] text-white hover:cursor-pointer rounded-lg font-bold');
     createNewButton.setAttribute('onclick', `createNewNoteUi()`);
     createNewButton.innerHTML = '+ New Note';
     return createNewButton;
@@ -137,7 +155,7 @@ function createNewButtonUi() {
 
 function deleteButtonUi(noteId) {
     const deleteButton = document.createElement('button');
-    deleteButton.setAttribute('class', 'absolute mt-[38%] ml-[50%] hover:cursor-pointer');
+    deleteButton.setAttribute('class', ' px-5 py-2 bg-[#ef4444] text-white hover:cursor-pointer rounded-lg font-bold');
     deleteButton.setAttribute('onclick', `deleteNote(${noteId})`);
     deleteButton.innerHTML = 'Delete';
     return deleteButton;
@@ -145,7 +163,7 @@ function deleteButtonUi(noteId) {
 
 function noteTitleUi(title) {
     const noteTitle = document.createElement('input');
-    noteTitle.setAttribute('class', 'p-2.5 border-2 border-solid w-1/2 m-2.5 flex justify-center text-3xl font-bold bg-tasktastic-input-background');
+    noteTitle.setAttribute('class', 'p-2.5 rounded-lg w-1/2 m-2.5 flex justify-center text-3xl font-bold bg-tasktastic-input-background');
     noteTitle.setAttribute('id', 'noteTitle')
     noteTitle.placeholder = "Title"
     if (title === undefined) {
@@ -158,7 +176,7 @@ function noteTitleUi(title) {
 
 function noteDescriptionUi(description) {
     const noteDescription = document.createElement('textarea');
-    noteDescription.setAttribute('class', 'p-2.5 border-2 border-tasktastic-gray border-solid w-[98%] m-2.5 h-3/4 bg-tasktastic-input-background');
+    noteDescription.setAttribute('class', 'p-2.5 rounded-lg w-[95%] m-2.5 h-4/5 bg-tasktastic-input-background');
     noteDescription.setAttribute('id', 'noteDescription')
     noteDescription.placeholder = "Type note here"
     if (description === undefined) {
@@ -177,21 +195,26 @@ function noteCreatedAtUi(createdAt) {
 
 function createNewNoteUi(showNote) {
     const noteDiv = document.createElement('div');
+    const buttonDiv = document.createElement('div')
+    buttonDiv.setAttribute('class', 'flex w-full justify-end gap-1.5 pr-8')
     noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full');
     const showCurrentNote = document.getElementById('showSelectedNote');
-    showCurrentNote.setAttribute('class', 'h-full w-full border-2 border-solid');
+    showCurrentNote.setAttribute('class', 'h-[90%] w-[90%] bg-tasktastic-box rounded-lg');
     const saveButton = saveButtonUi();
     const createNewButton = createNewButtonUi();
     const noteTitle = noteTitleUi();
     const noteDescription = noteDescriptionUi(); //add input value
     const saveNewNoteButton = document.createElement('button');
-    saveNewNoteButton.setAttribute('class', 'absolute mt-[30px] ml-[45%] hover:cursor-pointer');
+    saveNewNoteButton.setAttribute('class', 'px-5 py-2 bg-[#ef4444] text-white hover:cursor-pointer rounded-lg font-bold');
     saveNewNoteButton.setAttribute('onclick', `createNewNote()`)
-    saveNewNoteButton.innerHTML = "Create Note"
+    saveNewNoteButton.innerHTML = "Create New Note"
     console.log('I WORK');
     if (showCurrentNote.innerHTML !== "") {
         clearNote();
     }
-    noteDiv.append(noteTitle, noteDescription, createNewButton, saveButton, saveNewNoteButton);
+    buttonDiv.append(createNewButton, saveButton, saveNewNoteButton)
+    noteDiv.append(noteTitle, noteDescription);
+    noteDiv.appendChild(buttonDiv)
     showCurrentNote.appendChild(noteDiv);
 }
+

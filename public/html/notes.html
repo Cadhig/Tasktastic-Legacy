@@ -11,17 +11,18 @@
 </head>
 <body class="bg-tasktastic-background text-tasktastic-primary" onload="createNewNoteUi()">
     <header class="p-3 border-b-tasktastic-primary cursor-default">
-        <nav class="flex items-end justify-evenly">
+        <nav class="flex items-end justify-around">
         <h1 class="w-9/12 text-6xl pacifico-regular">TaskTastic</h1>
         <div>
-            <a href="https://github.com/Cadhig/Tasktastic" target="_blank" class="text-4xl cursor-pointer">GitHub</a>
+            <img src="../garf.jpg" alt="garf" class="rounded-full h-14 w-14">
         </div>
         </nav>
     </header>
-    <main class="flex justify-around h-[90%] items-center pt-6">
-        <article id="noteBox" class="flex flex-col w-1/4 gap-2 h-full pl-8 overflow-auto pr-2">
-        <!-- <article id="noteBox" class="grid grid-cols-2 w-1/4 gap-2 h-full pl-8 overflow-auto pr-2"> -->
-        </article>
+    <main class="flex justify-around h-[90%] pt-6 items-start">
+        <div>
+            <article id="noteBox" class="flex w-[500px] gap-3 ml-7 pl-7 pt-7 rounded-lg h-[90%] overflow-auto flex-wrap content-baseline bg-tasktastic-box">
+            </article>
+        </div>
         <aside class="w-3/4 flex justify-center h-full">
             <div id="showSelectedNote">
             </div>
