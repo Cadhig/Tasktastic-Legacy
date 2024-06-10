@@ -22,14 +22,14 @@
             <img src="./garf.jpg" alt="garf" class="h-full">
         </div>
         <div class="flex h-full flex-col items-center justify-center w-2/4">
-            <div>
+            <div class="bg-tasktastic-box p-12 rounded-lg">
                 <h2 class="text-3xl text-center mb-9 cursor-default">Welcome Back!</h2>
-                <div class="flex flex-col gap-3">
-                    <input type="text" placeholder="Username" id="username" class="border-slate-950 p-3 w-80 rounded-2xl appearance-none bg-gray-800">
-                    <input type="text" placeholder="Password" id="password" class="border-slate-950 p-3 w-80 rounded-2xl appearance-none bg-gray-800">
+                <div class="flex flex-col gap-2">
+                    <input type="text" placeholder="Username" id="username" class="border-slate-950 p-3 w-80 rounded-2xl appearance-none bg-tasktastic-input-background">
+                    <input type="text" placeholder="Password" id="password" class="border-slate-950 p-3 w-80 rounded-2xl appearance-none bg-tasktastic-input-background">
                 </div>
                 <div class="flex flex-col gap-3 mt-5">
-                    <button class="p-3 w-80 rounded-2xl bg-tasktastic-secondary text-xl" onclick="userLogin()">Login</button>
+                    <button class="p-3 w-80 rounded-lg bg-[#8b5cf6] hover:bg-[#6445AC] active:bg-[#3B266E] text-xl text-white" onclick="userLogin()">Login</button>
                     <div class="flex justify-center">
                         <p class="cursor-default pr-1">Don't have an account? </p>
                         <a href="/signup"><button class="text-tasktastic-accent">Sign Up</button></a>
