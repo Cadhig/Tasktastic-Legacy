@@ -1,7 +1,7 @@
 
 const colorArray = ['bg-[#907ad6] text-black', 'bg-[#a0d2db] text-black', 'bg-[#d8a48f] text-black'];
 
-async function notesSidebar() {
+async function notesSidebar(viewMode = 'grid') {
     const response = await fetch(`/api/notes`, {
         method: "GET",
         headers: {
@@ -11,15 +11,26 @@ async function notesSidebar() {
 
     const returnedCall = await response.json();
     console.log(returnedCall);
-    const noteBox = document.getElementById('noteBox');
+    const sidebar = document.getElementById('sidebar')
+    const noteBox = document.getElementById('noteBox')
     noteBox.innerHTML = null
-    const listButton = listViewButtonUi()
+    const listButton = listViewButtonUi(viewMode)
+    sidebar.innerHTML = null
+    sidebar.append(listButton, noteBox)
+    let classes = ' h-40'
+    let noteBoxClasses = 'grid grid-cols-2 w-[500px] gap-3 ml-7 px-7 pt-7 rounded-lg overflow-auto flex-wrap content-baseline bg-tasktastic-box overflow-auto h-[600px]'
+    if (viewMode === 'list') {
+        classes = 'w-full h-10 flex flex-col items-center justify-center'
+        noteBoxClasses = 'flex flex-col w-[500px] gap-3 ml-7 px-7 pt-7 rounded-lg overflow-auto flex-wrap content-baseline bg-tasktastic-box overflow-auto h-[600px]'
+
+    }
+    noteBox.setAttribute('class', noteBoxClasses)
     for (let i = 0; i < returnedCall.length; i++) {
         const singleNote = returnedCall[i];
         const noteId = returnedCall[i].id;
         const individualNote = document.createElement('div');
         const randomColor = Math.floor(Math.random() * colorArray.length);
-        individualNote.setAttribute('class', `min-h-8 rounded-lg flex items-center p-9 w-52 shadow-2xl h-40 ${colorArray[randomColor]} justify-center text-2xl text-tasktastic-secondary font-bold text-center`);
+        individualNote.setAttribute('class', `min-h-8 rounded-lg ${classes} shadow-2xl ${colorArray[randomColor]} text-2xl text-tasktastic-secondary font-bold text-center`);
         individualNote.setAttribute('onclick', `showSelectedNote(${noteId})`);
         const title = document.createElement('h2');
         const createdAt = document.createElement('p');
@@ -127,13 +138,17 @@ function showSelectedNoteUi(returnedCall) {
     showNote.appendChild(noteDiv);
 }
 
-function listViewUi() {
-
-}
-
-function listViewButtonUi() {
+function listViewButtonUi(viewMode) {
     const listButton = document.createElement('button')
-    listButton.innerHTML = "List View"
+    listButton.setAttribute('class', 'absolute px-5 py-2 bg-[#8b5cf6] text-white hover:cursor-pointer rounded-lg font-bold')
+    if (viewMode === 'list') {
+        listButton.innerHTML = "Grid View"
+        listButton.setAttribute('onclick', `notesSidebar('grid')`)
+    } else {
+        listButton.innerHTML = "List View"
+        listButton.setAttribute('onclick', `notesSidebar('list')`);
+    }
+    console.log(viewMode)
     return listButton
 }
 
