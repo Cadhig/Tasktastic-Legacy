@@ -3,7 +3,7 @@ const { Notes, Users } = require('../models')
 
 router.get('/', (req, res) => {
     Users.findAll({
-        attributes: ['id', 'username', 'password', 'created_at', 'updated_at']
+        attributes: ['id', 'username', 'password', 'created_at', 'updated_at', 'listView']
     })
         .then((result) => {
             return res.json(result)
@@ -58,6 +58,7 @@ router.post('/signup', (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body
+    console.log(req.body)
     console.log(username, password)
     try {
         const foundUser = await Users.findOne({
@@ -83,6 +84,26 @@ router.post('/login', async (req, res) => {
         console.error(error)
         res.status(500).json({ error: "Internal server error" })
     }
+})
+
+router.put('/listType', async (req, res) => {
+    const { listType } = req.body
+    await Users.update({
+        list_type: listType,
+        user_id: req.session.user_id,
+        where: {
+            user_id: req.session.user_id
+        }
+    })
+        .then((result) => {
+            return res.status(200).json(result)
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(400).json({
+                message: 'Cannot Update List!'
+            })
+        })
 })
 
 

@@ -1,7 +1,7 @@
 
 const colorArray = ['bg-[#907ad6] text-black', 'bg-[#a0d2db] text-black', 'bg-[#d8a48f] text-black'];
 
-async function notesSidebar(viewMode = 'grid') {
+async function notesSidebar(viewMode) {
     const response = await fetch(`/api/notes`, {
         method: "GET",
         headers: {
@@ -18,10 +18,10 @@ async function notesSidebar(viewMode = 'grid') {
     sidebar.innerHTML = null
     sidebar.append(listButton, noteBox)
     let classes = ' h-40'
-    let noteBoxClasses = 'grid grid-cols-2 w-[500px] gap-3 ml-7 px-7 pt-7 rounded-lg overflow-auto flex-wrap content-baseline bg-tasktastic-box overflow-auto h-[90%]'
+    let noteBoxClasses = 'grid grid-cols-2 w-[500px] gap-3 px-7 mt-7 rounded-lg overflow-auto flex-wrap content-baseline overflow-auto h-[90%]'
     if (viewMode === 'list') {
         classes = 'w-full h-10 flex flex-col items-center justify-center'
-        noteBoxClasses = 'flex flex-col w-[500px] gap-3 ml-7 px-7 pt-7 rounded-lg overflow-auto flex-wrap content-baseline bg-tasktastic-box overflow-auto h-[90%]'
+        noteBoxClasses = 'flex flex-col w-[500px] gap-3 px-7 mt-7 rounded-lg overflow-auto flex-wrap content-baseline overflow-auto h-[90%]'
 
     }
     noteBox.setAttribute('class', noteBoxClasses)
@@ -30,7 +30,7 @@ async function notesSidebar(viewMode = 'grid') {
         const noteId = returnedCall[i].id;
         const individualNote = document.createElement('div');
         const randomColor = Math.floor(Math.random() * colorArray.length);
-        individualNote.setAttribute('class', `min-h-8 rounded-lg ${classes} shadow-2xl ${colorArray[randomColor]} text-2xl text-tasktastic-secondary font-bold text-center`);
+        individualNote.setAttribute('class', `min-h-8 rounded-lg ${classes} shadow-lg ${colorArray[randomColor]} text-2xl text-tasktastic-secondary font-bold text-center flex justify-center items-center`);
         individualNote.setAttribute('onclick', `showSelectedNote(${noteId})`);
         const title = document.createElement('h2');
         const createdAt = document.createElement('p');
@@ -43,6 +43,20 @@ async function notesSidebar(viewMode = 'grid') {
     }
 }
 notesSidebar();
+
+async function updateListView(viewType) {
+    const data = {
+        list_type: viewType
+    }
+    const response = await fetch(`/api/users/listType`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-type": "application/json"
+        }
+    })
+    notesSidebar()
+}
 
 async function showSelectedNote(noteId) {
     const response = await fetch(`/api/notes/${noteId}`, {
@@ -112,7 +126,7 @@ function clearNote() {
 
 function showSelectedNoteUi(returnedCall) {
     const showNote = document.getElementById('showSelectedNote');
-    showNote.setAttribute('class', 'h-[90%] w-[95%] bg-tasktastic-box rounded-lg shadow-2xl');
+    showNote.setAttribute('class', 'h-[90%] w-[95%] bg-tasktastic-box rounded-lg shadow-lg');
     if (showNote.innerHTML !== "") {
         clearNote();
     }
@@ -140,13 +154,13 @@ function showSelectedNoteUi(returnedCall) {
 
 function listViewButtonUi(viewMode) {
     const listButton = document.createElement('button')
-    listButton.setAttribute('class', 'absolute px-5 py-2 bg-[#8b5cf6] text-white hover:cursor-pointer rounded-lg font-bold')
+    listButton.setAttribute('class', 'absolute px-5 py-2 bg-[#8b5cf6] text-white hover:cursor-pointer rounded-lg font-bold top-[118px] left-[394px]')
     if (viewMode === 'list') {
         listButton.innerHTML = "Grid View"
-        listButton.setAttribute('onclick', `notesSidebar('grid')`)
+        listButton.setAttribute('onclick', `notesSidebar('grid')`, `updateListView('grid')`)
     } else {
         listButton.innerHTML = "List View"
-        listButton.setAttribute('onclick', `notesSidebar('list')`);
+        listButton.setAttribute('onclick', `notesSidebar('list')`, `updateListView('list')`);
     }
     console.log(viewMode)
     return listButton
@@ -214,7 +228,7 @@ function createNewNoteUi(showNote) {
     buttonDiv.setAttribute('class', 'flex w-full justify-end gap-1.5 pr-8')
     noteDiv.setAttribute('class', 'flex flex-col items-center w-full h-full');
     const showCurrentNote = document.getElementById('showSelectedNote');
-    showCurrentNote.setAttribute('class', 'h-[90%] w-[95%] bg-tasktastic-box rounded-lg shadow-2xl');
+    showCurrentNote.setAttribute('class', 'h-[90%] w-[95%] bg-tasktastic-box rounded-lg shadow-lg');
     const saveButton = saveButtonUi();
     const createNewButton = createNewButtonUi();
     const noteTitle = noteTitleUi();
