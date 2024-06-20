@@ -107,6 +107,26 @@ router.put('/listType', async (req, res) => {
 })
 
 
+router.put('/changePass', async (req, res) => {
+    const { password } = req.body
+    await Users.update({
+        password: password,
+        user_id: req.session.user_id,
+        where: {
+            user_id: req.session.user_id
+        }
+    })
+        .then((result) => {
+            return res.status(200).json({ message: "Password Updated!" })
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(400).json({
+                message: 'Cannot Update Password!'
+            })
+        })
+})
+
 //CREATE LOGIN
 
 module.exports = router

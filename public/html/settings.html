@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
         <link href="../output.css" rel="stylesheet">
     </head>
-<body class="bg-tasktastic-background text-tasktastic-primary h-full">
+<body class="bg-tasktastic-background text-tasktastic-primary h-full" id="body">
     <header class="p-3 border-b-tasktastic-primary cursor-default">
         <nav class="flex items-end justify-evenly">
         <a href="/" class="w-9/12"><h1 class="w-9/12 text-6xl pacifico-regular">TaskTastic</h1></a>
@@ -18,7 +18,7 @@
         </div>
         </nav>
     </header>
-    <main class="flex justify-center h-3/4">
+    <main class="flex justify-center h-3/4" id="main">
         <div class="flex h-full flex-col items-center justify-center w-2/4">
             <div class="bg-tasktastic-box p-12 rounded-lg shadow-2xl">
                 <h2 class="text-3xl text-center cursor-default">User Settings</h2>
@@ -26,13 +26,14 @@
                 <div id="inputBox"></div>
                 <div class="flex flex-col gap-3 items-center justify-between h-72">
                     <img src="../garf.jpg" alt="pfp" class="rounded-full w-36">
-                    <button class="p-3 w-80 rounded-2xl bg-[#8b5cf6] text-xl hover:bg-[#6445AC] active:bg-[#3B266E] text-white">Update Password</button>
-                    <button class="p-3 w-80 rounded-2xl bg-[#8b5cf6] text-xl hover:bg-[#6445AC] active:bg-[#3B266E] text-white">Update Username</button>
+                    <button class="p-3 w-80 rounded-2xl bg-[#8b5cf6] text-xl hover:bg-[#6445AC] active:bg-[#3B266E] text-white" onclick="updatePasswordModal('Update Password')">Update Password</button>
+                    <button class="p-3 w-80 rounded-2xl bg-[#8b5cf6] text-xl hover:bg-[#6445AC] active:bg-[#3B266E] text-white" onclick="updateUsernameModal('Update Username')">Update Username</button>
                 </div>
             </div>
         </div>
     </main>
     <script src="../js/script.js"></script>
     <script src="../js/aesthetics.js"></script>
+    <script src="../js/account-actions.js"></script>
 </body>
 </html>
