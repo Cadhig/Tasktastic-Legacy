@@ -33,6 +33,10 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/html', 'notes.html'))
 })
 
+app.get('/settings', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/html', 'settings.html'))
+})
+
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`)
 })

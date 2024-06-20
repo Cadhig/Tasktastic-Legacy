@@ -40,6 +40,7 @@ async function createAccount() {
         return showError('Username taken!', "takenUsername")
     }
     alert('Account created')
+    window.location.assign('/notes')
 }
 
 
